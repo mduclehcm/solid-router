@@ -4,14 +4,23 @@ cache:
   yarn: true
   directories:
     - node_modules
+
 jobs:
   include:
-    - stage: npm release
-      script: echo "Deploying to npm ..."
-      deploy:
-        provider: npm
-        email: "minhducle.dev@gmail.com"
-        api_key: "NPM_AUTH_TOKEN"
-        skip_cleanup: true
-        on:
-          tags: true
+    - stage: build
+      script:
+        - yarn build
+      artifacts:
+        paths:
+          - "*/dist"
+          - "*/types"
+        expire_in: 1 day
+
+deploy:
+  provider: npm
+  email: minhducle.hcm@gmail.com
+  api_key:
+    secure: cZmqzMEDUFaq4z5vHczymSdEcY67sUH6zYcVV29/GSPFVCg02VwYdnEt3K5UEpUAgFuS6opFq0JGyBKzn6AQUj9o+s+5ZJmNbDNGgDU3kyL9ie2p5Ip0UWAZ64nb8ZW6fbphdf+7qv/5dJjUE3oHGnNSWnUepVCtERkfI+i8dXU9623gc79mBNOQYfuJwPRyIn5UeEoEC4E5e3gzLodGVA3kpiPODQfvwulGs6hpGUm5o3c4LPrUcVDq1jAcAzqsd9hwa59hqoeYLxUIJl/y5OxXmmap5UT5hdnfbCZ+TuHtxGuN3Hi6k55S+8j9pWqqhGnPWx7XQXTcYtD6sgtsCJycYWYsFMKbjm/1W1HUGK17sptW/EyYi9LCSVITLw6zEtWRNsWigjBqitMG3W8BgjeoMeVratybUUPv1O0nqOk7S7UQd5bN0W8D9VpO3ymUWiNBNy5b+cQGVuM3x27pKskJV1F3hFhdSkI7GYjYuSX5Ki6RnPkyrvbOQCKGLZP2fywfUjv+Cs4309Wjm+9nT6GkLjMC6zTCbQcRj46joqHIkRlTGvmabE/U6Y/T3Iq8BTAMblTcVLyE9p5zuGZQDuHbITHVeV/VZ5Jf2xVfySaF54feH1NWbFD9bfVc22ht8xSqBwpIpSpKhW7GwRrY5y7l/+hwc89JmHuJY/qIz5I=
+  on:
+    tags: true
+    repo: mduclehcm/solid-router
