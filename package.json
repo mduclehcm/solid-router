@@ -1,6 +1,6 @@
 {
   "name": "solid-router",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A declarative router for solid-js",
   "author": "Le Minh Duc<duclm@sendo.vn>",
   "license": "MIT",
@@ -30,8 +30,8 @@
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
-    "path-to-regexp": "^6.1.0",
     "history": "^4.10.1",
+    "path-to-regexp": "^6.1.0",
     "solid-js": "^0.15.5"
   }
 }
