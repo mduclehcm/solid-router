@@ -1,0 +1,17 @@
+language: node_js
+node_js: "12"
+cache:
+  yarn: true
+  directories:
+    - node_modules
+jobs:
+  include:
+    - stage: npm release
+      script: echo "Deploying to npm ..."
+      deploy:
+        provider: npm
+        email: "minhducle.dev@gmail.com"
+        api_key: "NPM_AUTH_TOKEN"
+        skip_cleanup: true
+        on:
+          tags: true
