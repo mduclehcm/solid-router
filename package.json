@@ -1,0 +1,37 @@
+{
+  "name": "solid-router",
+  "version": "0.0.0",
+  "description": "A declarative router for solid-js",
+  "author": "Le Minh Duc<duclm@sendo.vn>",
+  "license": "MIT",
+  "main": "dist/dom/index.cjs.js",
+  "module": "dist/dom/index.esm.js",
+  "typings": "types/dom/index.d.js",
+  "sideEffect": false,
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "prebuild": "rm -rf dist"
+  },
+  "files": [
+    "dist",
+    "server",
+    "hydrate"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-typescript": "^7.7.7",
+    "@types/history": "^4.7.3",
+    "babel-preset-solid": "^0.15.4",
+    "rollup": "^1.27.14",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-filesize": "^6.2.1",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "dependencies": {
+    "path-to-regexp": "^6.1.0",
+    "history": "^4.10.1",
+    "solid-js": "^0.15.5"
+  }
+}

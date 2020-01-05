@@ -1,0 +1,7 @@
+{
+  "name": "solid-router/server",
+  "main": "../dist/server/index.cjs.js",
+  "module": "../dist/server/index.ems.js",
+  "types": "../types/server/index.d.ts",
+  "sideEffects": false
+}

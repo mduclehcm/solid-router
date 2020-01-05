@@ -1,0 +1,7 @@
+{
+  "name": "solid-router/hydrate",
+  "main": "../dist/hydrate/index.cjs.js",
+  "module": "../dist/hydrate/index.esm.js",
+  "types": "../types/hydrate/index.d.ts",
+  "sideEffects": false
+}
