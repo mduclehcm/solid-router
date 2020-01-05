@@ -2,6 +2,12 @@
   "name": "solid-router",
   "version": "0.1.0",
   "description": "A declarative router for solid-js",
+  "keywords": [
+    "solid-js",
+    "router",
+    "solid-router",
+    "client side routing"
+  ],
   "author": "Le Minh Duc<duclm@sendo.vn>",
   "license": "MIT",
   "main": "dist/dom/index.cjs.js",
@@ -19,8 +25,15 @@
     "hydrate"
   ],
   "repository": {
-    "type": "github",
-    "url": "https://github.com/mduclehcm/solid-router"
+    "type": "git",
+    "url": "git+https://github.com/mduclehcm/solid-router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mduclehcm/solid-router/issues"
+  },
+  "homepage": "https://github.com/mduclehcm/solid-router#readme",
+  "peerDependencies": {
+    "solid-js": "^0.15.5"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
@@ -35,7 +48,6 @@
   },
   "dependencies": {
     "history": "^4.10.1",
-    "path-to-regexp": "^6.1.0",
-    "solid-js": "^0.15.5"
+    "path-to-regexp": "^6.1.0"
   }
 }
