@@ -1,5 +1,5 @@
 language: node_js
-node_js: "12"
+node_js: '12'
 cache:
   yarn: true
   directories:
@@ -10,13 +10,9 @@ jobs:
     - stage: build
       script:
         - yarn build
-      artifacts:
-        paths:
-          - "*/dist"
-          - "*/types"
-        expire_in: 1 day
 
 deploy:
+  edge: true
   provider: npm
   email: minhducle.hcm@gmail.com
   api_key:
