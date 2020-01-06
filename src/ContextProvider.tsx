@@ -9,8 +9,6 @@ interface ContextProviderProps {
 }
 export default function ContextProvider(props: ContextProviderProps) {
   return (
-    <HistoryContext.Provider value={props.history}>
-      {props.children}
-    </HistoryContext.Provider>
+    <HistoryContext.Provider value={props.history} children={props.children} />
   );
 }

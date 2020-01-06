@@ -10,8 +10,9 @@ export default function BrowserContextProvider(
   props: BrowserContextProviderProps,
 ) {
   return (
-    <ContextProvider history={createBrowserHistory(props.options)}>
-      {props.children}
-    </ContextProvider>
+    <ContextProvider
+      history={createBrowserHistory(props.options)}
+      children={props.children}
+    />
   );
 }

@@ -11,18 +11,19 @@ import { match } from 'path-to-regexp';
 import getArrayOf from './helpers/getArrayOf';
 import { HistoryContext } from './ContextProvider';
 import { RouteContext } from './RouteContext';
+import { RouteDefinition } from './RouteDefinition';
 
 function createRouteHandler() {
   const history = useContext(HistoryContext);
 
   const [location, setLocation] = createSignal(history.location);
 
-  const locationHandler = history.listen((location, action) => {
+  const locationHandler = history.listen(location => {
     setLocation(location);
   });
   onCleanup(() => locationHandler());
-  return route => {
-    const matcher = match(route.path, route.options);
+  return (route: RouteDefinition) => {
+    const matcher = match(route.path || '', route.options);
     return () => {
       return matcher(location().pathname);
     };
@@ -31,7 +32,7 @@ function createRouteHandler() {
 
 interface RouterProps {
   fallback: any;
-  children: any;
+  children: RouteDefinition[];
 }
 
 export default function Router(props: RouterProps) {
@@ -63,9 +64,12 @@ export default function Router(props: RouterProps) {
     createMemo(() => {
       const { index, params } = evalConditions();
       return sample(() => (
-        <RouteContext.Provider value={params}>
-          {index < 0 ? useFallback && props.fallback : routes[index].children}
-        </RouteContext.Provider>
+        <RouteContext.Provider
+          value={params}
+          children={
+            index < 0 ? useFallback && props.fallback : routes[index].children
+          }
+        />
       ));
     }),
   );

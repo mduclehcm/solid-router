@@ -1,23 +1,6 @@
-import {
-  ParseOptions,
-  TokensToRegexpOptions,
-  RegexpToFunctionOptions,
-} from 'path-to-regexp';
-interface RouteDefaultProps {
-  path: string;
-}
-interface RouteProps extends Partial<RouteDefaultProps> {
-  options: ParseOptions & TokensToRegexpOptions & RegexpToFunctionOptions;
-  children: Function;
-}
+import { RouteDefinition } from './RouteDefinition';
 
-const defaultProps: RouteDefaultProps = {
-  path: '',
-};
-
-function Route(_props: RouteProps) {
-  const props = { ...defaultProps, ..._props };
-
+function Route(props: RouteDefinition) {
   return props;
 }
 

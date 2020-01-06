@@ -8,13 +8,12 @@ interface LinkProps {
 
 export default function Link(props: LinkProps) {
   const history = useContext(HistoryContext);
-  function handleClick(e) {
+  function handleClick(e: any) {
     e.preventDefault();
     history.push(props.href);
   }
   return (
-    <a {...props} onClick={handleClick}>
-      {props.children}
-    </a>
+    //@ts-ignore
+    <a {...props} onClick={handleClick} children={props.children} />
   );
 }

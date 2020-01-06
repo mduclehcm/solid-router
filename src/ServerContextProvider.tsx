@@ -10,8 +10,9 @@ export default function ServerContextProvider(
   props: ServerContextProviderProps,
 ) {
   return (
-    <ContextProvider history={createMemoryHistory(props.options)}>
-      {props.children}
-    </ContextProvider>
+    <ContextProvider
+      history={createMemoryHistory(props.options)}
+      children={props.children}
+    />
   );
 }

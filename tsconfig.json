@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "declarationDir": "./types",
+    "declaration": true,
+    "target": "ES2016",
+    "module": "CommonJS",
+    "emitDeclarationOnly": true,
+    "jsx": "preserve"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
