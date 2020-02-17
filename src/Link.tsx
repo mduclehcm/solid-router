@@ -14,8 +14,6 @@ export default function Link(props: LinkProps) {
   }
   return (
     //@ts-ignore
-    <a {...props} onClick={handleClick}>
-      {props.children}
-    </a>
+    <a {...props} onClick={handleClick} />
   );
 }
