@@ -1,7 +1,7 @@
 import babel from 'rollup-plugin-babel';
-import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import filesize from 'rollup-plugin-filesize';
+import resolve from 'rollup-plugin-node-resolve';
 
 const external = ['solid-js', 'solid-js/dom', 'history', 'path-to-regexp'];
 const extensions = ['.ts', '.tsx'];
@@ -23,6 +23,7 @@ const configs = [
     ],
     solid: {
       generate: 'dom',
+      hydratable: false,
     },
   },
   {
@@ -40,7 +41,8 @@ const configs = [
       },
     ],
     solid: {
-      generate: 'hydrate',
+      generate: 'dom',
+      hydratable: true,
     },
   },
   {
@@ -59,27 +61,32 @@ const configs = [
     ],
     solid: {
       generate: 'ssr',
+      hydratable: true,
     },
   },
 ];
 
-export default configs.map(config => ({
-  input: config.input,
-  output: config.output,
-  external,
-  plugins: [
-    babel({
-      extensions,
-      exclude: 'node_modules/**',
-      presets: [
-        ['@babel/preset-typescript'],
-        ['babel-preset-solid', config.solid],
-      ],
-    }),
-    resolve({
-      extensions,
-    }),
-    commonjs(),
-    filesize(),
-  ],
-}));
+const finalConfigs = configs.map((config) => {
+  return {
+    input: config.input,
+    output: config.output,
+    external,
+    plugins: [
+      babel({
+        extensions,
+        exclude: 'node_modules/**',
+        presets: [
+          ['@babel/preset-typescript'],
+          ['babel-preset-solid', config.solid],
+        ],
+      }),
+      resolve({
+        extensions,
+      }),
+      commonjs(),
+      filesize(),
+    ],
+  };
+});
+
+export default finalConfigs;

@@ -25,8 +25,12 @@ render(
     <ContextProvider>
       <div>
         <Router fallback={<p>404 Page</p>}>
-          <Route path="/"><p>HomePage</p></Route>
-          <Route path="/about"><p>AboutPage</p></Route>
+          <Route path="/">
+            <p>HomePage</p>
+          </Route>
+          <Route path="/about">
+            <p>AboutPage</p>
+          </Route>
         </Router>
       </div>
     </ContextProvider>
@@ -40,19 +44,19 @@ render(
 ```js
 import http from 'http';
 import { renderToString } from 'solid-js/dom';
-// webpack: alias to 'solid-router/server'
-import { ContextProvider } from 'solid-router';
+import { ContextProvider } from 'solid-router/server';
+
 import App from './app';
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   res.write(
-    renderToString(() => (
+    await renderToString(() => (
       <ContextProvider
         options={{
           initialEntries: [req.url],
         }}
       >
-        {() => <App />}
+        <App />
       </ContextProvider>
     )),
   );

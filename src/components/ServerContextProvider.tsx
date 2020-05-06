@@ -3,16 +3,15 @@ import ContextProvider from './ContextProvider';
 
 interface ServerContextProviderProps {
   options: MemoryHistoryBuildOptions;
-  children: Function;
+  children?: any;
 }
 
 export default function ServerContextProvider(
   props: ServerContextProviderProps,
 ) {
   return (
-    <ContextProvider
-      history={createMemoryHistory(props.options)}
-      children={props.children}
-    />
+    <ContextProvider history={createMemoryHistory(props.options)}>
+      {props.children}
+    </ContextProvider>
   );
 }

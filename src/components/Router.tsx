@@ -7,7 +7,7 @@ import useRouteMatchSignal from '../hooks/useRouteMatchSignal';
 
 interface RouterProps {
   fallback: any;
-  children: RouteDefinition[];
+  children?: RouteDefinition[];
 }
 
 export default function Router(props: RouterProps) {

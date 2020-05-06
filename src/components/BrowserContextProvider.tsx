@@ -3,16 +3,15 @@ import ContextProvider from './ContextProvider';
 
 interface BrowserContextProviderProps {
   options: BrowserHistoryBuildOptions;
-  children: Function;
+  children?: any;
 }
 
 export default function BrowserContextProvider(
   props: BrowserContextProviderProps,
 ) {
   return (
-    <ContextProvider
-      history={createBrowserHistory(props.options)}
-      children={props.children}
-    />
+    <ContextProvider history={createBrowserHistory(props.options)}>
+      {props.children}
+    </ContextProvider>
   );
 }
