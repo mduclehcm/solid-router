@@ -5,10 +5,12 @@ export const HistoryContext = createContext<History>();
 
 interface ContextProviderProps {
   history: History;
-  children: Function;
+  children?: any;
 }
 export default function ContextProvider(props: ContextProviderProps) {
   return (
-    <HistoryContext.Provider value={props.history} children={props.children} />
+    <HistoryContext.Provider value={props.history}>
+      {props.children}
+    </HistoryContext.Provider>
   );
 }

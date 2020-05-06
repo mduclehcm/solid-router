@@ -1,11 +1,7 @@
-import {
-  ParseOptions,
-  TokensToRegexpOptions,
-  RegexpToFunctionOptions,
-} from 'path-to-regexp';
+import { RouteOptions } from './types';
 
 export interface RouteDefinition {
   path?: string;
-  options: ParseOptions & TokensToRegexpOptions & RegexpToFunctionOptions;
-  children: Function;
+  options?: RouteOptions;
+  children?: Function;
 }

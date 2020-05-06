@@ -1,34 +1,9 @@
-import {
-  createSignal,
-  createMemo,
-  useContext,
-  onCleanup,
-  suspend,
-  sample,
-} from 'solid-js';
-import { match } from 'path-to-regexp';
+import { createMemo, suspend, sample } from 'solid-js';
 
-import getArrayOf from './helpers/getArrayOf';
-import { HistoryContext } from './ContextProvider';
-import { RouteContext } from './RouteContext';
-import { RouteDefinition } from './RouteDefinition';
-
-function createRouteHandler() {
-  const history = useContext(HistoryContext);
-
-  const [location, setLocation] = createSignal(history.location);
-
-  const locationHandler = history.listen((location) => {
-    setLocation(location);
-  });
-  onCleanup(() => locationHandler());
-  return (route: RouteDefinition) => {
-    const matcher = match(route.path || '', route.options);
-    return () => {
-      return matcher(location().pathname);
-    };
-  };
-}
+import getArrayOf from '../helpers/getArrayOf';
+import { RouteContext } from '../RouteContext';
+import { RouteDefinition } from '../RouteDefinition';
+import useRouteMatchSignal from '../hooks/useRouteMatchSignal';
 
 interface RouterProps {
   fallback: any;
@@ -36,12 +11,11 @@ interface RouterProps {
 }
 
 export default function Router(props: RouterProps) {
-  const createMatcher = createRouteHandler();
   const routes = getArrayOf(props.children);
-  const matchers = routes.map(createMatcher);
+  const routeMatchSignals = routes.map(useRouteMatchSignal);
   const useFallback = 'fallback' in props;
   const evalConditions = createMemo(() =>
-    matchers.reduce(
+    routeMatchSignals.reduce(
       (result, matcher, index) => {
         if (result.index === -1) {
           const match = matcher();

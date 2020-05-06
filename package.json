@@ -36,13 +36,13 @@
   },
   "homepage": "https://github.com/mduclehcm/solid-router#readme",
   "peerDependencies": {
-    "solid-js": "^0.15.5"
+    "solid-js": "^0.18.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-typescript": "^7.7.7",
     "@types/history": "^4.7.3",
-    "babel-preset-solid": "^0.15.4",
+    "babel-preset-solid": "^0.18.0",
     "rollup": "^1.27.14",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",

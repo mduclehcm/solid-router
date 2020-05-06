@@ -1,4 +1,4 @@
-import { RouteDefinition } from './RouteDefinition';
+import { RouteDefinition } from '../RouteDefinition';
 
 function Route(props: RouteDefinition) {
   return props;
