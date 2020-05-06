@@ -48,7 +48,7 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-filesize": "^6.2.1",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "solid-js": "^0.15.5",
+    "solid-js": "^0.18.0",
     "typescript": "^3.7.4"
   },
   "dependencies": {

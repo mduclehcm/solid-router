@@ -1,5 +1,5 @@
 {
-  "name": "solid-router/server",
+  "name": "solid-router",
   "main": "../dist/server/index.cjs.js",
   "module": "../dist/server/index.ems.js",
   "types": "../types/server.d.ts",

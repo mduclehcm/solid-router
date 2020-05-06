@@ -3,7 +3,7 @@ import {
   createMemo,
   useContext,
   onCleanup,
-  awaitSuspense,
+  suspend,
   sample,
 } from 'solid-js';
 import { match } from 'path-to-regexp';
@@ -18,7 +18,7 @@ function createRouteHandler() {
 
   const [location, setLocation] = createSignal(history.location);
 
-  const locationHandler = history.listen(location => {
+  const locationHandler = history.listen((location) => {
     setLocation(location);
   });
   onCleanup(() => locationHandler());
@@ -60,16 +60,14 @@ export default function Router(props: RouterProps) {
       },
     ),
   );
-  return awaitSuspense(
+
+  return suspend(
     createMemo(() => {
       const { index, params } = evalConditions();
       return sample(() => (
-        <RouteContext.Provider
-          value={params}
-          children={
-            index < 0 ? useFallback && props.fallback : routes[index].children
-          }
-        />
+        <RouteContext.Provider value={params}>
+          {index < 0 ? useFallback && props.fallback : routes[index].children}
+        </RouteContext.Provider>
       ));
     }),
   );
