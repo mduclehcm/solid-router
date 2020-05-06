@@ -23,14 +23,12 @@ import { ContextProvider } from 'solid-router';
 render(
   () => (
     <ContextProvider>
-      {() => (
-        <div>
-          <Router fallback={<p>404 Page</p>}>
-            <Route path="/">{() => <p>HomePage</p>}</Route>
-            <Route path="/aboud">{() => <p>AboutPage</p>}</Route>
-          </Router>
-        </div>
-      )}
+      <div>
+        <Router fallback={<p>404 Page</p>}>
+          <Route path="/"><p>HomePage</p></Route>
+          <Route path="/about"><p>AboutPage</p></Route>
+        </Router>
+      </div>
     </ContextProvider>
   ),
   document.getElementById('root'),
