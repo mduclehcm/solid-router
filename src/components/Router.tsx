@@ -14,8 +14,8 @@ export default function Router(props: RouterProps) {
   const routes = getArrayOf(props.children);
   const routeMatchSignals = routes.map(useRouteMatchSignal);
   const useFallback = 'fallback' in props;
-  const evalConditions = createMemo(() =>
-    routeMatchSignals.reduce(
+  const evalConditions = createMemo(() => {
+    return routeMatchSignals.reduce(
       (result, matcher, index) => {
         if (result.index === -1) {
           const match = matcher();
@@ -32,12 +32,13 @@ export default function Router(props: RouterProps) {
         index: -1,
         params: {},
       },
-    ),
-  );
+    );
+  });
 
   return suspend(
     createMemo(() => {
       const { index, params } = evalConditions();
+      console.log('1', index);
       return sample(() => (
         <RouteContext.Provider value={params}>
           {index < 0 ? useFallback && props.fallback : routes[index].children}

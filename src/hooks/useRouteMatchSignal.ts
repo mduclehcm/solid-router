@@ -6,8 +6,11 @@ import useLocationSignal from './useLocationSignal';
 
 type RouteMatchSignal = () => Match<Object>;
 
-export default function useRouteMatchSignal(routeOrPath: RouteDefinition | string): RouteMatchSignal {
-  const locationSignal = useLocationSignal()
+export default function useRouteMatchSignal(
+  routeOrPath: RouteDefinition | string,
+): RouteMatchSignal {
+  const locationSignal = useLocationSignal();
+
   let route: RouteDefinition;
   if (typeof routeOrPath === 'string') {
     route = { path: routeOrPath, options: {} };
@@ -15,10 +18,11 @@ export default function useRouteMatchSignal(routeOrPath: RouteDefinition | strin
     route = routeOrPath;
   }
   if (!route.path) {
-    route.path = "*"
+    route.path = '*';
   }
   const matcher = match(route.path, route.options);
   return () => {
-    return matcher(locationSignal().pathname);
+    const pathname = locationSignal().pathname;
+    return matcher(pathname);
   };
 }
