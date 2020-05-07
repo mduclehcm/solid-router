@@ -38,7 +38,6 @@ export default function Router(props: RouterProps) {
   return suspend(
     createMemo(() => {
       const { index, params } = evalConditions();
-      console.log('1', index);
       return sample(() => (
         <RouteContext.Provider value={params}>
           {index < 0 ? useFallback && props.fallback : routes[index].children}
