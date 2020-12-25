@@ -1,7 +1,10 @@
-import { RouteDefinition } from '../RouteDefinition';
+import { RouteDefinition } from '../interfaces/RouteDefinition';
 
-function Route(props: RouteDefinition) {
-  return props;
-}
+export type RouteProps = RouteDefinition;
+
+const Route = (props: RouteDefinition) => {
+  // @ts-ignore
+  return props as JSX.Element;
+};
 
 export default Route;

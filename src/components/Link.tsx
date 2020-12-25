@@ -1,15 +1,24 @@
 import useHistory from '../hooks/useHistory';
 
-interface LinkProps {
-  href: string;
-  children?: any;
-}
+export type LinkProps = JSX.AnchorHTMLAttributes<HTMLAnchorElement> & {
+  children: any;
+};
 
-export default function Link(props: LinkProps) {
+export default function Link({ children, ...props }: LinkProps) {
   const history = useHistory();
-  function handleClick(e: any) {
+  function handleClick(
+    e: MouseEvent & {
+      currentTarget: HTMLAnchorElement;
+      target: HTMLAnchorElement;
+    },
+  ) {
     e.preventDefault();
     history.push(props.href);
   }
-  return <a {...props} onClick={handleClick} />;
+  return (
+    // @ts-ignore
+    <a {...props} onClick={handleClick}>
+      {children}
+    </a>
+  );
 }

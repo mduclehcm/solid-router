@@ -1,7 +1,7 @@
 import { useContext } from 'solid-js';
 
-import { RouteContext } from '../RouteContext';
+import { RouterContext } from '../context/RouterContext';
 
 export default function useParams() {
-  return useContext(RouteContext);
+  return useContext(RouterContext).params;
 }

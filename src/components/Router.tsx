@@ -1,48 +1,81 @@
-import { createMemo, suspend, sample } from 'solid-js';
-
+import {
+  Component,
+  createMemo,
+  untrack,
+  useContext,
+  createSignal,
+} from 'solid-js';
+import { RouteDefinition } from '../interfaces/RouteDefinition';
 import getArrayOf from '../helpers/getArrayOf';
-import { RouteContext } from '../RouteContext';
-import { RouteDefinition } from '../RouteDefinition';
-import useRouteMatchSignal from '../hooks/useRouteMatchSignal';
+import useLocation from '../hooks/useLocation';
+import { RouterContext } from '../context/RouterContext';
 
-interface RouterProps {
-  fallback: any;
-  children?: RouteDefinition[];
-}
+import createRouteMatcher from './createRouteMatcher';
 
-export default function Router(props: RouterProps) {
-  const routes = getArrayOf(props.children);
-  const routeMatchSignals = routes.map(useRouteMatchSignal);
+export type RouterProps = {
+  fallback?: JSX.Element;
+  children: any;
+};
+
+export const Router = ((props: RouterProps) => {
   const useFallback = 'fallback' in props;
-  const evalConditions = createMemo(() => {
-    return routeMatchSignals.reduce(
-      (result, matcher, index) => {
-        if (result.index === -1) {
-          const match = matcher();
-          if (match) {
-            return {
-              index,
-              params: match.params,
-            };
-          }
-        }
-        return result;
-      },
-      {
-        index: -1,
-        params: {},
-      },
-    );
-  });
+  const routes = getArrayOf<RouteDefinition>(props.children);
 
-  return suspend(
-    createMemo(() => {
-      const { index, params } = evalConditions();
-      return sample(() => (
-        <RouteContext.Provider value={params}>
-          {index < 0 ? useFallback && props.fallback : routes[index].children}
-        </RouteContext.Provider>
-      ));
-    }),
+  const routeMatchers = routes.map(createRouteMatcher);
+  const parentRouter = useContext(RouterContext);
+  const [params, setParams] = createSignal({});
+  const computeMatchedIndex = createMemo<number>(
+    () => {
+      let pathname;
+      if (parentRouter) {
+        pathname = '/' + (parentRouter.params()[0] || []).join('/');
+      } else {
+        const location = useLocation();
+        if (location) {
+          pathname = location.pathname;
+        }
+      }
+      if (!pathname) {
+        return -1;
+      }
+      for (let i = 0; i < routeMatchers.length; i++) {
+        const matcher = routeMatchers[i](pathname, setParams);
+        if (matcher()) {
+          return i;
+        }
+      }
+      return -1;
+    },
+    -1,
+    (prev, next) => prev === next,
   );
-}
+
+  const computeMatchedRoute = createMemo(
+    () => {
+      const index = computeMatchedIndex();
+      if (index < 0) {
+        if (useFallback) return [-1, props.fallback];
+        return [-1, null];
+      }
+      const children = routes[index].children;
+      return [
+        index,
+        () =>
+          typeof children === 'function'
+            ? untrack(() => children())
+            : (children as JSX.Element),
+      ];
+    },
+    [],
+    (prev, next) => prev[0] === next[0],
+  );
+  return (
+    <RouterContext.Provider
+      value={{
+        params,
+      }}
+    >
+      {computeMatchedRoute()[1]}
+    </RouterContext.Provider>
+  );
+}) as Component<RouterProps>;

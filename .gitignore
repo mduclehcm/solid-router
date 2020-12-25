@@ -50,3 +50,7 @@ jspm_packages/
 # build
 dist
 types
+.cache
+
+# IDE
+.vscode
